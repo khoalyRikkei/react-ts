@@ -1,39 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-class App extends Component {
-  render() {
-    const slogan = "Để nông dân biết code";
-    return (
-      <div className="App">
-        <>
-          <header>
-            <h1>Session 19 - DOM</h1>
-          </header>
-          <main id="main">
-            <h3 id="text-title">Đây là title</h3>
-            <section>
-              <p className="text-red">Đây là thẻ p1</p>
-              <p className="text-red">Đây là thẻ p2</p>
-              <p className="text-red">Đây là thẻ p3</p>
-              <p className="text-red">Đây là thẻ p4</p>
-            </section>
-          </main>
-        </>
-      </div>
-    );
-  }
-}
-
-function FormComponent() {
+function App() {
   return (
-    <>
-      <form>
-        <input type="text" placeholder="email" />
-        <input type="password" placeholder="password" />
-      </form>
-    </>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }
 
