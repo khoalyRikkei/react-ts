@@ -3,16 +3,13 @@ import Student from "./Student";
 import { studentsDB } from "../../models/db";
 import { IStudent } from "../../types/types";
 
-class ListStudent extends Component<{ data: IStudent[] , onDelete: Function}> {
-  //   componentDidMount(): void {
-  //     console.log("Kiem tra data:111", this.props.data);
-  //   }
-  //   componentWillMount(): void {
-  //     console.log("Kiem tra data:222", this.props.data);
-  //   }
+class ListStudent extends Component<{
+  data: IStudent[];
+  onDelete: Function;
+  onViewForm: Function;
+  onAddEditForm: Function
+}> {
   render(): ReactNode {
-    console.log("Kiem tra data:", this.props.data);
-
     return (
       <div className="card-body">
         <h3 className="card-title">Danh sách sinh viên</h3>
@@ -29,9 +26,17 @@ class ListStudent extends Component<{ data: IStudent[] , onDelete: Function}> {
               </tr>
             </thead>
             <tbody>
-              {this.props.data.map((student, index) => (
-                <Student student={student} index={index}  onDelete={this.props.onDelete} key={index}/>
-              ))}
+              {this.props.data.length > 0 &&
+                this.props.data.map((student, index) => (
+                  <Student
+                    student={student}
+                    index={index}
+                    onDelete={this.props.onDelete}
+                    key={index}
+                    onViewForm={this.props.onViewForm}
+                    onAddEditForm={this.props.onAddEditForm}
+                  />
+                ))}
             </tbody>
           </table>
         </div>

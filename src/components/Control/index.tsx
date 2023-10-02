@@ -9,7 +9,7 @@ class ControlStudent extends Component<{ onShowForm: Function }> {
             <button
               type="button"
               className="btn btn-primary btn-icon-text"
-              onClick={() => this.props.onShowForm(true)}
+              onClick={() => this.props.onShowForm(true, "add")}
             >
               Thêm mới sinh viên
             </button>

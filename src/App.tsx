@@ -8,25 +8,60 @@ import { IStudent } from "./types/types";
 import { studentsDB } from "./models/db";
 
 class App extends Component {
-  state: { students: IStudent[]; isShowForm: boolean } = {
+  state: {
+    students: IStudent[];
+    isShowForm: boolean;
+    action: string | null;
+    studentForm: IStudent | null;
+  } = {
     students: studentsDB,
     isShowForm: false,
+    action: null,
+    studentForm: null,
   };
 
   // handleToggleForm
-  handleToggleForm = (status: boolean): void => {
-    this.setState({ isShowForm: status });
+  handleToggleForm = (status: boolean, action: string): void => {
+    if (status === false) {
+      this.setState({ studentForm: null });
+    }
+    this.setState({ isShowForm: status, action: action });
   };
 
   handleDelete = (code: string) => {
-    console.log("Kieemr tra code", code);
-
     this.setState(() => {
       const newData = this.state.students.filter(
         (student) => student.code != code
       );
       return { students: newData };
     });
+  };
+
+  handleAddEditForm = (student: IStudent, action: string | null) => {
+    if (this.state.action === "add") {
+      this.state.students.push(student);
+      this.setState({ students: this.state.students });
+    } else if (this.state.action === "edit") {
+      const newData = this.state.students.map((item) => {
+        if (item.code === student.code) {
+          return { ...item, ...student };
+        }
+
+        return item;
+      });
+
+      this.setState({ students: newData });
+    }
+  };
+  handleViewForm = (code: "string", action: string) => {
+    const student = this.state.students.find(
+      (student) => student.code === code
+    );
+
+    if (student) {
+      this.setState({ studentForm: student });
+    }
+    this.handleToggleForm(true, action);
   };
   render(): React.ReactNode {
     return (
@@ -40,13 +75,22 @@ class App extends Component {
             <ListStudent
               data={this.state.students}
               onDelete={this.handleDelete}
+              onViewForm={this.handleViewForm}
+              onAddEditForm={this.handleAddEditForm}
             />
             {/* END LIST STUDENT */}
           </div>
         </div>
         {/* START FORM SINH VIEN */}
         <div className="col-5 grid-margin">
-          {this.state.isShowForm && <FormStudent />}
+          {this.state.isShowForm && (
+            <FormStudent
+              onAddEditForm={this.handleAddEditForm}
+              onCloseForm={this.handleToggleForm}
+              action={this.state.action}
+              studentForm={this.state.studentForm}
+            />
+          )}
         </div>
         {/* END FORM SINH VIÊN */}
       </div>
