@@ -1,4 +1,5 @@
 import ExBMI from "../pages/BMI";
+import Game from "../pages/Game";
 import Home from "../pages/Home";
 import StudentManagement from "../pages/StudentManagement";
 import UseEffectExample from "../pages/UseEffect";
@@ -35,5 +36,11 @@ export const routes = [
     title: "Student",
     path: "student-management",
     component: StudentManagement,
+  },
+ 
+  {
+    title: "Game",
+    path: "game-board",
+    component: Game,
   },
 ];
