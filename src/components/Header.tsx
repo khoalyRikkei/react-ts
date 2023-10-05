@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { routes } from "../routes";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   return (
@@ -12,8 +13,18 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {routes.map((route) => (
-              <Nav.Link href={route.path}>{route.title}</Nav.Link>
+            {routes.map((route, i) => (
+              <NavLink
+                to={route.path}
+                key={i}
+                style={({ isActive }) => ({
+                  color: isActive ? "orange" : "initial",
+                  textDecoration: "none",
+                  padding: "20px"
+                })}
+              >
+                {route.title}
+              </NavLink>
             ))}
           </Nav>
         </Navbar.Collapse>

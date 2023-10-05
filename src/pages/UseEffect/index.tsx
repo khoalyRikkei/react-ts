@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { routes } from "../../routes";
 
-export default function UseEffect_Ex() {
+export default function ExampleUseEffect() {
   const [mark, setMark] = useState(0);
   const [result, setResult] = useState("");
   const [count, setCount] = useState({ point: 0 });

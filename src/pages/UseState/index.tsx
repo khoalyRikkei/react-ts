@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function UseState_Ex() {
+export default function ExampleUseState() {
   /**
      CÚ PHÁP:
      const [state, setState] = useState<type>(value)
