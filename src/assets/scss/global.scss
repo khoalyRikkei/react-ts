@@ -1,0 +1,31 @@
+@use "variables";
+
+@use "header";
+
+@mixin theme($theme: DarkGray) {
+  background: $theme;
+  box-shadow: 0 0 1px rgba($theme, 0.25);
+  color: #fff;
+}
+
+.border-round {
+  border-radius: 20px;
+}
+.card {
+  @include theme();
+
+  @extend .border-round;
+}
+
+// $i: 1;
+
+// @while $i<5 {
+//   .item-#{$i} {
+//     color: #1b439a;
+//   }
+//   @if $i==4 {
+//     .item-#{$i} {
+//       color: red;
+//     }
+//   }
+// }

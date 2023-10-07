@@ -1,0 +1,17 @@
+@use "variables";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  &__menu {
+    display: flex;
+    color: variables.$color-gray;
+
+    li {
+      &:hover {
+        background-color: blue;
+      }
+    }
+  }
+}
