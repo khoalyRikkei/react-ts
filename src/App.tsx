@@ -2,69 +2,43 @@ import React, { lazy, Suspense } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import PrivateRouter from "./routes/private";
-import { privateRoute, publicRouter } from "./routes";
-import Header from "./components/Header";
-import Error from "./pages/Error";
-import ScrollToTop from "./common";
-import ProductDetail from "./pages/Products/product-detail";
-import Loading from "./common/Loading";
 
-const LazyTest = lazy(
-  () =>
-    new Promise<{ default: React.ComponentType<any> }>((resolve) =>
-      setTimeout(() => {
-        import("./pages/TestLazy").then((module) =>
-          resolve({ default: module.default })
-        );
-      }, 5000)
-    )
-);
+import Header from "./components/Header";
+
+import Footer from "./components/Footer";
+import Services from "./pages/Services";
+import Portfolio from "./pages/Portfolio";
+import About from "./pages/About";
+import Home from "./pages/Home";
+import { privateRoute } from "./routes";
+import Error from "./pages/Error";
+import Layout, { LayoutSidebar } from "./Layouts";
 
 function App() {
   return (
     <>
-      <ScrollToTop />
-      <Header />
-      <Link to="lazy">Lazy</Link>
-      <Routes>
-        {publicRouter.map((route, i) => {
-          if (route.children) {
-            <Route key={i} element={route.element} path={route.path}>
-              {route.children.map((item, index) => {
-                console.log(1111, route.path +'/'+item.path );
-                
-                return (
-                <Route key={index} element={item.element} path={item.path} />
-              )})}
-            </Route>;
-          }
+      <LayoutSidebar>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          {true ? (
+            <Route path="/admin" element={<Home />} />
+          ) : (
+            <Navigate to="error/auth" />
+          )}
 
-          return (
-            <Route key={i} element={route.element} path={route.path}></Route>
-          );
-        })}
-
-        <Route
-          element={
-            <Suspense fallback={<Loading />}>
-              <LazyTest />
-            </Suspense>
-          }
-          path="/lazy"
-        ></Route>
-        <Route element={<ProductDetail />} path="product-detail/:id"></Route>
-        <Route element={<Error />} path="*"></Route>
-      </Routes>
-
-      <Routes>
-        <Route element={<PrivateRouter />}>
-          {privateRoute[0].children.map((route) => (
-            <Route element={route.element} path={route.path}></Route>
-          ))}
-        </Route>
-      </Routes>
+          <Route path="/admin/" element={<PrivateRouter />}>
+            {privateRoute.map((route, i) => (
+              <Route path={route.path} element={route.element} key={i} />
+            ))}
+          </Route>
+          <Route path="/services" element={<Services />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </LayoutSidebar>
     </>
   );
 }
