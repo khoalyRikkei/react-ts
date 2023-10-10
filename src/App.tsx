@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { getDataUser } from "./api";
 
 function App() {
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const response = await getDataUser();
+    setData(response);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
