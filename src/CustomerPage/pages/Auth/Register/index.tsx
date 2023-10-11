@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // React
 import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 // Import from Event
 import RegisterEvent from "./register.event";
@@ -25,20 +26,26 @@ const registerEvent = new RegisterEvent();
 
 const defaultTheme = createTheme();
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<I_UserRegister>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+  const [formError, setFormError] = useState({
+    emailMsg: "",
+    passwordMsg: "",
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerEvent.onRegister(formData);
+    const ret = registerEvent.onRegister(formData, navigate);
+    if (ret.status === "failure") {
+      setFormError({ ...formError, ...ret.message });
+    }
   };
 
-
-  
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -73,6 +80,9 @@ export default function Register() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  variant="outlined"
+                  error={true}
+                  helperText={"Lỗi định dạng"}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -93,6 +103,8 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={formError.emailMsg ? true : false}
+                  helperText={formError.emailMsg}
                 />
               </Grid>
               <Grid item xs={12}>

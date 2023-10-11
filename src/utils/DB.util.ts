@@ -79,3 +79,15 @@ export function deleteItemById(tableName: string, id: number) {
     return false;
   }
 }
+
+export function getItemsByConditions(
+    
+  tableName: string,
+  conditions: { key: string; value: string | number | boolean }[]
+) {
+  const entities: any[] = JSON.parse(localStorage.getItem(tableName) || "[]");
+  const _entities = entities.filter((entity) =>
+    conditions.find((condition) => condition.value === entity[condition.key])
+  );
+  return _entities;
+}

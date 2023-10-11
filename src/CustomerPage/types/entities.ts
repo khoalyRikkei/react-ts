@@ -4,4 +4,6 @@ export interface I_UserEntity {
   email: string;
   password: string;
   created_at: string;
+  role: string;
+  status: boolean;
 }
