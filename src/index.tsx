@@ -11,7 +11,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const store = createStore(reducers);
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  reducers /* preloadedState, */
+);
+/* eslint-enable */
 root.render(
   <Provider store={store}>
     <App />

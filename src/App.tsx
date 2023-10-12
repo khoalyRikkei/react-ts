@@ -3,13 +3,17 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+
 import Home from "./CustomerPage/pages/Home";
+import { act_delete } from "./CustomerPage/store/actions";
 function App() {
   const dispatch = useDispatch();
   const listTodo = useSelector(
     (state: { todosReducer: string[] }) => state.todosReducer
   ) as string[];
+  const counter = useSelector(
+    (state: { countReducer: number }) => state.countReducer
+  );
 
   return (
     <div className="App">
@@ -29,17 +33,13 @@ function App() {
       </button>
       <Home />
 
+      <p> {counter}</p>
+
       {listTodo &&
         listTodo.map((item: string, i: number) => (
           <p key={i}>
             {item}{" "}
-            <button
-              onClick={() =>
-                dispatch({ type: "DELETE", payload: "", index: i })
-              }
-            >
-              Delete
-            </button>
+            <button onClick={() => dispatch(act_delete(i))}>Delete</button>
           </p>
         ))}
     </div>
